@@ -1,11 +1,9 @@
-from locust import HttpLocust, TaskSet, between
+import time
+from locust import HttpUser, task, between
 
-def index(l):
-    l.client.get("/")
-    
-class UserBehavior(TaskSet):
-    tasks = {index: 1}
-    
-class WebsiteUser(HttpLocust):
-    task_set = UserBehavior
+class QuickstartUser(HttpUser):
     wait_time = between(5.0, 9.0)
+    
+    @task
+    def index(l):
+        l.client.get("/")
